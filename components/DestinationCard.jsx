@@ -59,9 +59,9 @@ export default function DestinationCard({ destination }) {
           </div>
           <Link
             href={`/contact?destination=${encodeURIComponent(name)}`}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105"
+            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white text-sm font-semibold px-4 py-2 rounded-xl whitespace-nowrap shrink-0 transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105"
           >
-            Enquire â†’
+            Enquire &rarr;
           </Link>
         </div>
       </div>
