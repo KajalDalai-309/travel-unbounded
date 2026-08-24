@@ -14,9 +14,9 @@ export default function DestinationCard({ destination }) {
   }).format(price);
 
   return (
-    <div className="group relative bg-slate-800/50 rounded-2xl overflow-hidden border border-white/5 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10">
+    <div className="group relative bg-slate-800/50 rounded-2xl overflow-hidden border border-white/5 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col h-full">
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative h-52 overflow-hidden shrink-0">
         <img
           src={imgError ? "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=800&auto=format&fit=crop" : image}
           alt={`${name}, ${country}`}
@@ -36,7 +36,7 @@ export default function DestinationCard({ destination }) {
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-grow">
         <h3 className="text-white font-bold text-xl mb-2 group-hover:text-amber-400 transition-colors">{name}</h3>
         <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">{description}</p>
 
@@ -52,7 +52,7 @@ export default function DestinationCard({ destination }) {
         )}
 
         {/* Price + CTA */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/5">
+        <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-auto">
           <div>
             <p className="text-xs text-slate-500 mb-0.5">Starting from</p>
             <p className="text-amber-400 font-bold text-lg">{formattedPrice}</p>
@@ -61,7 +61,7 @@ export default function DestinationCard({ destination }) {
             href={`/contact?destination=${encodeURIComponent(name)}`}
             className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105"
           >
-            Enquire →
+            Enquire â†’
           </Link>
         </div>
       </div>
