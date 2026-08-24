@@ -8,6 +8,7 @@ export const metadata = {
 
 const offices = [
   {
+    code: "IN",
     city: "Bengaluru",
     tag: "Headquarters",
     flag: "🇮🇳",
@@ -16,6 +17,7 @@ const offices = [
     border: "border-amber-500/30",
   },
   {
+    code: "IN",
     city: "Kochi",
     tag: "Kerala Office",
     flag: "🇮🇳",
@@ -24,6 +26,7 @@ const offices = [
     border: "border-emerald-500/30",
   },
   {
+    code: "KE",
     city: "Nairobi",
     tag: "Kenya Office",
     flag: "🇰🇪",
@@ -194,14 +197,18 @@ export default function AboutPage() {
             {offices.map((office) => (
               <div
                 key={office.city}
-                className={`bg-gradient-to-br ${office.color} border ${office.border} rounded-2xl p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}
+                className={`group relative overflow-hidden bg-gradient-to-br ${office.color} border ${office.border} rounded-2xl p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}
               >
-                <div className="text-4xl mb-4">{office.flag}</div>
-                <div className="mb-1">
+                {/* Watermark */}
+                <div className="absolute -right-4 -bottom-6 text-[140px] font-black text-white/[0.02] select-none pointer-events-none group-hover:text-white/[0.04] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700">
+                  {office.code}
+                </div>
+                <div className="text-4xl mb-4 relative z-10">{office.flag}</div>
+                <div className="mb-1 relative z-10">
                   <span className="text-xs text-slate-400 uppercase tracking-wider">{office.tag}</span>
                 </div>
-                <h3 className="text-white font-bold text-2xl mb-3">{office.city}</h3>
-                <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">{office.address}</p>
+                <h3 className="text-white font-bold text-2xl mb-3 relative z-10">{office.city}</h3>
+                <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line relative z-10">{office.address}</p>
               </div>
             ))}
           </div>
