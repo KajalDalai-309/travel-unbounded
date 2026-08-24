@@ -181,10 +181,11 @@ export default function BookingForm() {
           Contact Number <span className="text-red-400">*</span>
         </label>
         <div className="flex gap-2">
+          <div className="relative">
           <select
             id="countryCode" name="countryCode"
             value={formData.countryCode} onChange={handleChange}
-            className="w-36 appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2394a3b8\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em 1.2em' }}
+            className="w-36 appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer"
           >
             {COUNTRY_CODES.map((c) => (
               <option key={c.code} value={c.code} className="bg-slate-800 text-white py-2">
@@ -192,6 +193,10 @@ export default function BookingForm() {
               </option>
             ))}
           </select>
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
           <div className="flex-1" data-error={errors.contactNumber ? "true" : undefined}>
             <input
               id="contactNumber" name="contactNumber" type="tel"
@@ -282,16 +287,21 @@ export default function BookingForm() {
         <label htmlFor="destination" className="block text-sm font-medium text-slate-300 mb-1.5">
           Preferred Destination
         </label>
+        <div className="relative">
         <select
           id="destination" name="destination"
           value={formData.destination} onChange={handleChange}
-          className="w-full appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2394a3b8\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em 1.2em' }}
+          className="w-full appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer"
         >
           <option value="" className="bg-slate-800 text-white py-2">Select a destination (optional)</option>
           {DESTINATIONS.map((d) => (
             <option key={d} value={d} className="bg-slate-800 text-white py-2">{d}</option>
           ))}
         </select>
+        <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
       </div>
 
       {/* Row 8: Message */}
