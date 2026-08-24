@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import DestinationCard from "@/components/DestinationCard";
 import { indiaDestinations, internationalDestinations } from "@/data/destinations";
 

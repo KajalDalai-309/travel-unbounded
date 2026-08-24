@@ -1,4 +1,4 @@
-﻿export const destinations = [
+export const destinations = [
   {
     id: 1, name: "Kerala", country: "India",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop",
