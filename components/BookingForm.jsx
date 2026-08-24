@@ -184,10 +184,10 @@ export default function BookingForm() {
           <select
             id="countryCode" name="countryCode"
             value={formData.countryCode} onChange={handleChange}
-            className="w-36 bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-3 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
+            className="w-36 appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2394a3b8\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em 1.2em' }}
           >
             {COUNTRY_CODES.map((c) => (
-              <option key={c.code} value={c.code} className="bg-slate-800">
+              <option key={c.code} value={c.code} className="bg-slate-800 text-white py-2">
                 {c.code} {c.country}
               </option>
             ))}
@@ -285,11 +285,11 @@ export default function BookingForm() {
         <select
           id="destination" name="destination"
           value={formData.destination} onChange={handleChange}
-          className="w-full bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
+          className="w-full appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2394a3b8\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em 1.2em' }}
         >
-          <option value="" className="bg-slate-800">Select a destination (optional)</option>
+          <option value="" className="bg-slate-800 text-white py-2">Select a destination (optional)</option>
           {DESTINATIONS.map((d) => (
-            <option key={d} value={d} className="bg-slate-800">{d}</option>
+            <option key={d} value={d} className="bg-slate-800 text-white py-2">{d}</option>
           ))}
         </select>
       </div>
