@@ -64,6 +64,15 @@ async function getDestinations() {
   return { india: fallbackIndia, international: fallbackIntl };
 }
 
+function getGridClasses(count) {
+  if (count <= 1) return "grid grid-cols-1 max-w-md mx-auto gap-6";
+  if (count === 2) return "grid grid-cols-1 sm:grid-cols-2 gap-6";
+  if (count === 3) return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+  if (count === 4) return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6";
+  if (count === 5) return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5";
+  return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6";
+}
+
 export default async function HomePage() {
   const { india: indiaDestinations, international: internationalDestinations } = await getDestinations();
 
@@ -153,7 +162,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          <div className={getGridClasses(indiaDestinations.length)}>
             {indiaDestinations.map((dest) => (
               <DestinationCard key={dest.id || dest._id} destination={dest} />
             ))}
@@ -176,7 +185,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          <div className={getGridClasses(internationalDestinations.length)}>
             {internationalDestinations.map((dest) => (
               <DestinationCard key={dest.id || dest._id} destination={dest} />
             ))}
