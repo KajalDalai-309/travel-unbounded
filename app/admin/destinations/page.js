@@ -68,14 +68,22 @@ export default function AdminDestinationsPage() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this destination?")) return;
+  const handleDelete = async (id, name) => {
+    if (!confirm(`Are you sure you want to delete "${name || "this destination"}"?`)) return;
     setDeleting(id);
     try {
-      await fetch(`/api/admin/destinations/${id}`, { method: "DELETE" });
-      setDestinations((prev) => prev.filter((d) => d._id !== id));
+      const res = await fetch(`/api/admin/destinations/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setDestinations((prev) => prev.filter((d) => (d._id !== id && d.id !== id)));
+      } else {
+        alert(data.error || "Failed to delete destination");
+      }
     } catch (err) {
       console.error(err);
+      alert("Network error. Please try again.");
     } finally {
       setDeleting(null);
     }
@@ -251,7 +259,7 @@ export default function AdminDestinationsPage() {
                               <span>✏️</span> Edit
                             </button>
                             <button
-                              onClick={() => handleDelete(dest._id)}
+                              onClick={() => handleDelete(dest._id || dest.id, dest.name)}
                               disabled={deleting === dest._id}
                               className="flex-1 bg-slate-800 hover:bg-red-500/20 hover:text-red-300 text-slate-300 text-xs font-semibold py-2 rounded-xl border border-white/5 hover:border-red-500/30 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
                             >
