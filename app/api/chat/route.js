@@ -1,15 +1,42 @@
 import { NextResponse } from "next/server";
 import https from "https";
 
-const SYSTEM_PROMPT = `You are an expert AI travel assistant for Travel Unbounded, a premium Indian experiential travel company.
-Your goal is to help users plan extraordinary journeys across India and international destinations.
+const SYSTEM_PROMPT = `You are the expert AI Travel Planner for "Travel Unbounded" — a premier experiential travel company.
 
-Guidelines:
-1. Be warm, enthusiastic, courteous, and knowledgeable.
-2. If the user mentions a destination, duration, budget, or preferences, craft a clear, exciting DAY-BY-DAY ITINERARY.
-3. Structure your response nicely with clean formatting, emojis, budget estimates in INR (₹), and recommended highlights.
-4. If details are missing, recommend best seasons, highlights, and ask clarifying questions to tailor their trip.
-5. Always remind them that Travel Unbounded specializes in custom handcrafted trips, and encourage them to click "Plan Your Trip" or submit the Enquiry form!`;
+FORMATTING RULES (CRITICAL):
+1. NEVER output raw HTML tags (e.g. do NOT use <br>, <p>, <span>, <div>, <table>, etc.).
+2. NEVER use markdown tables. Tables do not render well in chat bubbles.
+3. Use clean, readable bullet points with appropriate emojis.
+4. Keep answers neat, elegant, structured, and easy to read.
+
+When generating a Custom Itinerary, format it cleanly like this:
+
+✈️ [Destination Name] – [Duration] Trip
+💰 Estimated Budget: ₹[Amount] per person
+
+🗓️ Day-by-Day Itinerary:
+
+📍 Day 1: [Day Title]
+• Morning: [Activity]
+• Afternoon: [Activity]
+• Evening: [Activity & Sunset point]
+• Stay: [Recommended stay type/area]
+
+📍 Day 2: [Day Title]
+• Morning: [Activity]
+• Afternoon: [Activity]
+• Evening: [Activity & Dining spot]
+• Stay: [Recommended stay type/area]
+
+(continue for remaining days...)
+
+💡 Key Travel Tips:
+• Best time to visit: [Months]
+• Local delicacies to try: [Food items]
+• Pack essentials: [Quick tips]
+
+📋 Next Steps:
+Ready to book? Fill out our Enquiry Form (click "Plan Your Trip" above) and our travel curators will customize every detail for you! 🌟`;
 
 function callGroqApi(messages) {
   return new Promise((resolve, reject) => {
@@ -45,10 +72,18 @@ function callGroqApi(messages) {
             if (data.error) {
               reject(new Error(data.error.message || "Groq API error"));
             } else {
-              const reply =
+              let reply =
                 data.choices?.[0]?.message?.content ||
                 "I am here to help you plan your next journey with Travel Unbounded!";
-              resolve(reply);
+              
+              // Strip any accidental raw HTML tags
+              reply = reply
+                .replace(/<br\s*[\/]?>/gi, "\n")
+                .replace(/<[^>]+>/g, "")
+                .replace(/\?\?/g, "–")
+                .replace(//g, "");
+
+              resolve(reply.trim());
             }
           } catch (e) {
             reject(e);
@@ -83,7 +118,7 @@ export async function POST(request) {
       {
         error: "AI service temporarily busy",
         reply:
-          "Namaste! I'd love to help you plan your journey. Could you please share your travel dates, budget, or preferred destinations so I can create a custom itinerary for you?",
+          "Namaste! I would love to help you plan your journey. Could you please share your travel dates, budget, and who you are travelling with so I can craft a custom itinerary for you?",
       },
       { status: 200 }
     );
