@@ -81,7 +81,7 @@ function callGroqApi(messages) {
                 .replace(/<br\s*[\/]?>/gi, "\n")
                 .replace(/<[^>]+>/g, "")
                 .replace(/\?\?/g, "–")
-                .replace(//g, "");
+                
 
               resolve(reply.trim());
             }
