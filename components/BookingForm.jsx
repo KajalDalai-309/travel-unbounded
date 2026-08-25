@@ -70,6 +70,31 @@ export default function BookingForm() {
     const dest = searchParams?.get("destination");
     if (dest) setFormData((prev) => ({ ...prev, destination: dest }));
   }, [searchParams]);
+  useEffect(() => {
+    fetch("/api/destinations")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.success && Array.isArray(data.destinations) && data.destinations.length > 0) {
+          const names = data.destinations.map((d) => d.name);
+          setDestinationOptions([...names, "Other"]);
+        }
+      })
+      .catch((err) => console.error("Error loading destinations:", err));
+  }, []);
+
+
+  // Dynamically fetch active destinations from MongoDB
+  useEffect(() => {
+    fetch("/api/destinations")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && Array.isArray(data.destinations) && data.destinations.length > 0) {
+          const names = data.destinations.map((d) => d.name);
+          setDestinationOptions([...names, "Other"]);
+        }
+      })
+      .catch((err) => console.error("Error loading destinations:", err));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

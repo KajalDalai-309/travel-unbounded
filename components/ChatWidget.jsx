@@ -102,8 +102,7 @@ export default function ChatWidget() {
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Hide widget inside Admin portal
-  if (pathname?.startsWith("/admin")) return null;
+
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -156,6 +155,9 @@ export default function ChatWidget() {
   };
 
   const clearChat = () => setMessages([WELCOME_MSG]);
+
+  // Hide widget inside Admin portal
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <>
