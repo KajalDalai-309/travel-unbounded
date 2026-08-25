@@ -60,6 +60,7 @@ export default function BookingForm() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [destinationOptions, setDestinationOptions] = useState(DESTINATIONS);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null); // null | "success" | "error"
   const [apiMessage, setApiMessage] = useState("");
@@ -294,7 +295,7 @@ export default function BookingForm() {
           className="w-full appearance-none bg-slate-700/50 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all cursor-pointer"
         >
           <option value="" className="bg-slate-800 text-white py-2">Select a destination (optional)</option>
-          {DESTINATIONS.map((d) => (
+          {destinationOptions.map((d) => (
             <option key={d} value={d} className="bg-slate-800 text-white py-2">{d}</option>
           ))}
         </select>
