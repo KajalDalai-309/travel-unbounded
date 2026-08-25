@@ -14,6 +14,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Hide public navbar on all admin portal routes
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },

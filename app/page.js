@@ -1,6 +1,11 @@
 import Link from "next/link";
 import DestinationCard from "@/components/DestinationCard";
-import { indiaDestinations, internationalDestinations } from "@/data/destinations";
+import connectDB from "@/lib/mongodb";
+import Destination from "@/models/Destination";
+import { indiaDestinations as fallbackIndia, internationalDestinations as fallbackIntl } from "@/data/destinations";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = {
   title: "Travel Unbounded | India Most Trusted Experiential Travel Experts",
@@ -38,7 +43,30 @@ const whyUs = [
   },
 ];
 
-export default function HomePage() {
+async function getDestinations() {
+  try {
+    await connectDB();
+    const rawDestinations = await Destination.find({ isActive: true }).lean();
+    if (rawDestinations && rawDestinations.length > 0) {
+      // Clean JSON serialization to remove non-plain Mongoose ObjectIds and Dates for React Server-Client boundary
+      const destinations = JSON.parse(JSON.stringify(rawDestinations));
+      const india = destinations
+        .filter((d) => d.category === "india")
+        .map((d) => ({ ...d, id: d._id }));
+      const international = destinations
+        .filter((d) => d.category === "international")
+        .map((d) => ({ ...d, id: d._id }));
+      return { india, international };
+    }
+  } catch (err) {
+    console.error("Error fetching destinations from DB:", err);
+  }
+  return { india: fallbackIndia, international: fallbackIntl };
+}
+
+export default async function HomePage() {
+  const { india: indiaDestinations, international: internationalDestinations } = await getDestinations();
+
   return (
     <>
       {/* HERO SECTION */}
@@ -127,7 +155,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {indiaDestinations.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} />
+              <DestinationCard key={dest.id || dest._id} destination={dest} />
             ))}
           </div>
         </div>
@@ -150,7 +178,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {internationalDestinations.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} />
+              <DestinationCard key={dest.id || dest._id} destination={dest} />
             ))}
           </div>
         </div>

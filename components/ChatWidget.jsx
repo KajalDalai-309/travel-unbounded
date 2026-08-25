@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 function MessageBubble({ msg }) {
   const isUser = msg.role === "user";
@@ -29,6 +30,8 @@ const WELCOME_MSG = {
 };
 
 export default function ChatWidget() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/admin")) return null;
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([WELCOME_MSG]);
   const [input, setInput] = useState("");
